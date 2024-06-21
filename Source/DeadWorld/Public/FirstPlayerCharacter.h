@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "FirstPlayerCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCurrentWeaponChangedDelegate, class AWeapon*, CurrentWeapon, const class AWeapon*, OldWeapon);
+
 UCLASS()
 class DEADWORLD_API AFirstPlayerCharacter : public ACharacter
 {
@@ -41,6 +43,10 @@ public:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, ReplicatedUsing = OnRep_CurrentWeapon, Category = "State")
 	class AWeapon* CurrentWeapon;
+
+	// Called when ever current weapon is changed
+	UPROPERTY(BlueprintAssignable, Category = "Delegates")
+	FCurrentWeaponChangedDelegate CurrentWeaponChangedDelegate;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "State")
 	int32 CurrentIndex = 0; // keep track of our iNDex(current weapon)
